@@ -6,6 +6,7 @@ using System.IO;
 
 public class AtlasTool : Editor
 {
+    // Tool for slicing atlas to pngs
     [MenuItem("Tools/Slice Atlas")]
     public static void SliceAtlas()
     {

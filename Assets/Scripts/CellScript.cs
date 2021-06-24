@@ -31,6 +31,7 @@ public class CellScript : MonoBehaviour, IClickable
 
     private void Start()
     {
+        // is spawn in first level
         if (_isFirst)
         {
             transform.localScale = Vector3.zero;
@@ -54,11 +55,12 @@ public class CellScript : MonoBehaviour, IClickable
         }
         else
         {
-            Sequence easeInBoundSequence = DOTween.Sequence();
+            // generating and playing "ease in bounce" animation
+            Sequence easeInBounceSequence = DOTween.Sequence();
             var positionX = transform.localPosition.x;
             for (int i = 10; i >= 0; i -= 2)
             {
-                easeInBoundSequence.Append(transform.DOLocalMoveX(
+                easeInBounceSequence.Append(transform.DOLocalMoveX(
                     i % 4 == 0 ? positionX - i : positionX + i,
                     0.2f));
             }
@@ -67,6 +69,7 @@ public class CellScript : MonoBehaviour, IClickable
         Debug.Log("Cell Tapped");
     }
 
+    // waiting for finish of easeInBounceSequence
     IEnumerator DelayBeforeNextLevel(float duration)
     {
         yield return new WaitForSeconds(duration);

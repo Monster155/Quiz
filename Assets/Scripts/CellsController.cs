@@ -20,16 +20,10 @@ public class CellsController : MonoBehaviour
 
     void OnEnable()
     {
-        // _answers = new int[_maxLevelNum];
-        // SRandom randNum = new SRandom();
-        // Debug.Log("Answers: ");
-        // for (int i = 0; i < _answers.Length; i++)
-        // {
-        //     _answers[i] = randNum.Next(0, cards.Length - 1);
-        //     Debug.Log(_answers[i]);
-        // }
+        // generating array of answers
         var ran = new SRandom();
         _answers = Enumerable.Range(0, cards.Length).OrderBy(x => ran.Next()).ToArray();
+        // logging
         string log = "";
         foreach (var answer in _answers)
         {
@@ -41,17 +35,21 @@ public class CellsController : MonoBehaviour
 
     public void LoadLevel(int levelNum)
     {
+        Debug.Log("Level number: " + levelNum);
+
+        // destroy all children before creating new
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
 
-        Debug.Log("Level number: " + levelNum);
-        // Generating answer
+        // Generating answer id in array and card id
         int answerId = URandom.Range(0, 3 * levelNum - 1);
         Debug.Log("Answer Id: " + answerId);
+        
         int answerCardId = _answers[levelNum - 1];
         Debug.Log("Answer Card Id: " + answerCardId);
+        
         // Generating array of cards on map
         int[] slots = new int[3 * levelNum];
         var ran = new SRandom();
@@ -68,6 +66,7 @@ public class CellsController : MonoBehaviour
 
         // Set task text for game
         taskText.text = "Find " + cards[answerCardId].objectName;
+        
         // Calculating positions for cells and fill cells
         int z = 0;
         for (int i = 0; i < levelNum; i++)
@@ -89,8 +88,9 @@ public class CellsController : MonoBehaviour
                         break;
                 }
 
+                // spawn cell
                 GameObject cell = Instantiate(cellPrefab, pos, Quaternion.identity, transform);
-                // spawn answer cell
+                // if answer cell
                 if (z == answerId)
                 {
                     // add card Scriptable Object and convert in to Prefab's values
@@ -101,17 +101,17 @@ public class CellsController : MonoBehaviour
                     cellScript.CorrectButtonTapped += () => LevelFinished?.Invoke();
                     cellScript.ParticleController = particleController;
                 }
-                // spawn other cells
+                // if other cell
                 else
                 {
                     cell.GetComponent<CardToPrefab>().SetCard(cards[slots[z]]);
                 }
-
+                // set IsFirst, if this is first level 
                 if (levelNum <= 1)
                 {
                     cell.GetComponent<CellScript>().IsFirst = true;
                 }
-
+                // moving cells to Z=0 from Z< -3000
                 var localPosition = cell.transform.localPosition;
                 localPosition = new Vector3(localPosition.x, localPosition.y, 0);
                 cell.transform.localPosition = localPosition;

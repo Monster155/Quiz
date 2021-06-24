@@ -16,9 +16,11 @@ public class MenuScript : MonoBehaviour, IClickable
 
     public void Tapped()
     {
+        // reload scene after pressing Restart button
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // RestartGame.Invoke();
-        // gameObject.SetActive(false);
+        // version with no reloading scene (but some animation can be disabled)
+        /*RestartGame.Invoke();
+        gameObject.SetActive(false);*/
     }
 
     public void SetActive(bool isActive)

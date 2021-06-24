@@ -16,12 +16,14 @@ public class GameController : MonoBehaviour
         cellsController.LevelFinished += LoadNextLevel;
         menu.RestartGame += DropLevelCount;
     }
-
+    
     private void LoadNextLevel()
     {
         Debug.Log("Loading new Level");
+        
         // increase level number
         _currentLevelNum++;
+        
         // if this level was the last - open menu, else - generate next level
         if (_currentLevelNum <= _maxLevelNum)
             cellsController.LoadLevel(_currentLevelNum);
