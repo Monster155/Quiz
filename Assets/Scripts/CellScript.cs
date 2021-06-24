@@ -43,12 +43,12 @@ public class CellScript : MonoBehaviour, IClickable
     {
         if (_isAnswer)
         {
-            // TODO object in rect bounce
+            // object in rect bounce
             Sequence easeInBoundSequence = DOTween.Sequence();
             var scale = imageGameObject.transform.localScale;
             easeInBoundSequence.Append(imageGameObject.transform.DOScale(scale * 1.5f, 0.5f));
             easeInBoundSequence.Append(imageGameObject.transform.DOScale(scale, 0.5f));
-            // TODO stars particles
+            // stars particles
             _particleController.LevelFinished();
             StartCoroutine(DelayBeforeNextLevel(1));
         }
@@ -62,13 +62,6 @@ public class CellScript : MonoBehaviour, IClickable
                     i % 4 == 0 ? positionX - i : positionX + i,
                     0.2f));
             }
-
-            /*easeInBoundSequence.Append(transform.DOLocalMoveX(positionX + 10, 0.2f));
-            easeInBoundSequence.Append(transform.DOLocalMoveX(positionX - 8, 0.2f));
-            easeInBoundSequence.Append(transform.DOLocalMoveX(positionX + 6, 0.2f));
-            easeInBoundSequence.Append(transform.DOLocalMoveX(positionX - 4, 0.2f));
-            easeInBoundSequence.Append(transform.DOLocalMoveX(positionX + 2, 0.2f));
-            easeInBoundSequence.Append(transform.DOLocalMoveX(positionX - 0, 0.2f));*/
         }
 
         Debug.Log("Cell Tapped");
