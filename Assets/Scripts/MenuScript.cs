@@ -7,26 +7,31 @@ using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour, IClickable
 {
     public event Action RestartGame;
-    public Animator imageAnim;
+    public GameObject loadingScreen;
 
     private void Start()
     {
         gameObject.SetActive(false);
+        loadingScreen.SetActive(false);
     }
 
     public void Tapped()
     {
+        StartCoroutine(LoadingScreenCoroutine(2));
+    }
+
+    private IEnumerator LoadingScreenCoroutine(float delayDuration)
+    {
+        loadingScreen.SetActive(true);
+        yield return new WaitForSeconds(delayDuration);
         // reload scene after pressing Restart button
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // version with no reloading scene (but some animation can be disabled)
-        /*RestartGame.Invoke();
-        gameObject.SetActive(false);*/
+        RestartGame?.Invoke();
+        loadingScreen.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void SetActive(bool isActive)
     {
         gameObject.SetActive(isActive);
-        if (isActive)
-            imageAnim.Play("ImageFadeIn");
     }
 }
