@@ -14,9 +14,10 @@ public class CellsController : MonoBehaviour
     public ParticleController particleController;
     public GameObject cellPrefab;
     public TaskTextController taskTextController;
-    public Card[] cards;
+    public CardGroup[] cardGroups;
 
-    private int[] _answers;
+    private int[][] _answers;
+    private int[] _nextAnswerId;
 
     void OnEnable()
     {
@@ -25,14 +26,26 @@ public class CellsController : MonoBehaviour
 
     public void GenerateNewAnswers()
     {
+        _answers = new int[cardGroups.Length][];
+        _nextAnswerId = new int[cardGroups.Length];
         // generating array of answers
-        var ran = new SRandom();
-        _answers = Enumerable.Range(0, cards.Length).OrderBy(x => ran.Next()).ToArray();
+        for (int i = 0; i < cardGroups.Length; i++)
+        {
+            var ran = new SRandom();
+            _answers[i] = Enumerable.Range(0, cardGroups[i].cards.Length).OrderBy(x => ran.Next()).ToArray();
+            _nextAnswerId[i] = -1;
+        }
+
         // logging
         string log = "";
         foreach (var answer in _answers)
         {
-            log += answer + " ";
+            foreach (int an in answer)
+            {
+                log += an + " ";
+            }
+
+            log += "\n";
         }
 
         Debug.Log("Answers: " + log);
@@ -41,6 +54,29 @@ public class CellsController : MonoBehaviour
     public void LoadLevel(int levelNum)
     {
         Debug.Log("Level number: " + levelNum);
+
+        // getting next value from answers array by chosen type of cards
+        int nextType = URandom.Range(0, cardGroups.Length - 1); // 0-0.999 convert to 0, and only 1.0 convert to 1
+        Debug.Log("Next Type: " + nextType);
+        _nextAnswerId[nextType]++;
+        int k = nextType;
+        // if current cards group is not available, choosing next cards group
+        while (_nextAnswerId[k] >= _answers[k].Length)
+        {
+            k = (k + 1) % _nextAnswerId.Length;
+            _nextAnswerId[k]++;
+            if (k == nextType)
+            {
+                //TODO game ends (all cards groups are not available)
+                Debug.LogError("No more cards");
+                Application.Quit();
+                break;
+            }
+        }
+
+        nextType = k;
+        // get cards group for this level
+        Card[] cards = cardGroups[nextType].cards;
 
         // destroy all children before creating new
         foreach (Transform child in transform)
@@ -52,7 +88,7 @@ public class CellsController : MonoBehaviour
         int answerId = URandom.Range(0, 3 * levelNum - 1);
         Debug.Log("Answer Id: " + answerId);
 
-        int answerCardId = _answers[levelNum - 1];
+        int answerCardId = _answers[nextType][_nextAnswerId[nextType]];
         Debug.Log("Answer Card Id: " + answerCardId);
 
         // Generating array of cards on map

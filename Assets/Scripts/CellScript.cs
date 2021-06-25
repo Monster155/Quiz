@@ -66,7 +66,7 @@ public class CellScript : MonoBehaviour, IClickable
             }
         }
 
-        Debug.Log("Cell Tapped");
+        // Debug.Log("Cell Tapped");
     }
 
     // waiting for finish of easeInBounceSequence

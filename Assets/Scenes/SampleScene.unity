@@ -5903,17 +5903,9 @@ MonoBehaviour:
   cellPrefab: {fileID: 1917665295270308368, guid: 9126a4acbf36d8d4a819f3baa84c1694,
     type: 3}
   taskTextController: {fileID: 499049252}
-  cards:
-  - {fileID: 11400000, guid: 6f0a6edabf8974740bb6cf182cb1781b, type: 2}
-  - {fileID: 11400000, guid: 761abe513054d6c46bee23ad871f89a6, type: 2}
-  - {fileID: 11400000, guid: 64bc763201a87fc43b2a9a583c126bb3, type: 2}
-  - {fileID: 11400000, guid: 592b99c5bb0d06a49a87300c5687b8ae, type: 2}
-  - {fileID: 11400000, guid: e0c301db66c9c1649960532d9faf155d, type: 2}
-  - {fileID: 11400000, guid: 4d81c314d129e174594981929f6ba3dd, type: 2}
-  - {fileID: 11400000, guid: f1e1b1810f7245a42b89a6201aaff0d8, type: 2}
-  - {fileID: 11400000, guid: 5d0b0e7944169944d8657bf4b587c2bc, type: 2}
-  - {fileID: 11400000, guid: 6791bddf41d16304dbeb6a87412e712f, type: 2}
-  - {fileID: 11400000, guid: 8be2fdfaebf1e6349bcad00469ca6aac, type: 2}
+  cardGroups:
+  - {fileID: 11400000, guid: 8e69da0dd87dfe04e957d19e4665ce89, type: 2}
+  - {fileID: 11400000, guid: 034afed33c2d5b745a8b71d44d5c7dc2, type: 2}
 --- !u!4 &2125240135
 Transform:
   m_ObjectHideFlags: 0

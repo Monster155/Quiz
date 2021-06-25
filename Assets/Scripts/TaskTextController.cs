@@ -13,6 +13,7 @@ public class TaskTextController : MonoBehaviour
         text.text = newText;
         if (isFirst)
         {
+            // for animation playing and other restart functionality
             gameObject.SetActive(false);
             gameObject.SetActive(true);
         }

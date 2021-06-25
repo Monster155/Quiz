@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 
     private void DropLevelCount()
     {
-        cellsController.GenerateNewAnswers();
+        // cellsController.GenerateNewAnswers();
         _currentLevelNum = 0;
         LoadNextLevel();
     }
