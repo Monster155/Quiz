@@ -20,6 +20,11 @@ public class CellsController : MonoBehaviour
 
     void OnEnable()
     {
+        GenerateNewAnswers();
+    }
+
+    public void GenerateNewAnswers()
+    {
         // generating array of answers
         var ran = new SRandom();
         _answers = Enumerable.Range(0, cards.Length).OrderBy(x => ran.Next()).ToArray();
