@@ -57,10 +57,10 @@ public class CellScript : MonoBehaviour, IClickable
         {
             // generating and playing "ease in bounce" animation
             Sequence easeInBounceSequence = DOTween.Sequence();
-            var positionX = transform.localPosition.x;
+            var positionX = imageGameObject.transform.localPosition.x;
             for (int i = 10; i >= 0; i -= 2)
             {
-                easeInBounceSequence.Append(transform.DOLocalMoveX(
+                easeInBounceSequence.Append(imageGameObject.transform.DOLocalMoveX(
                     i % 4 == 0 ? positionX - i : positionX + i,
                     0.2f));
             }
